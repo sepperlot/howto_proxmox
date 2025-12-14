@@ -6,11 +6,26 @@ Gotchas around Proxmox and installed LXCs
 
 Install via <https://community-scripts.github.io/ProxmoxVE/scripts?id=paperless-ngx>
 
-To make it work via Nginx Proxy Manager (NPM) edit `/opt/paperless/paperless.conf` and set `PAPERLESS_URL` and `PAPERLESS_CSRF_TRUSTED_ORIGINS` to desired domains
+To make it work via Nginx Proxy Manager (NPM) edit `/opt/paperless/paperless.conf` and set `PAPERLESS_URL` and `PAPERLESS_CSRF_TRUSTED_ORIGINS` to desired domains otherwise you'll get either CSRF errors after login or the dashboard won't fully load.
 
-```text
+Stop running services:
+
+```shell
+systemctl stop paperless-consumer paperless-webserver paperless-scheduler paperless-task-queue
+```
+
+Edit config options
+
+```shell
+vi /opt/paperless/paperless.conf
 PAPERLESS_URL=<https://paperless.example.com>
 PAPERLESS_CSRF_TRUSTED_ORIGINS=<https://paperless.example.com,https://paperless-ngx.example.com> # can be set using PAPERLESS_URL
+```
+
+Start services
+
+```shell
+systemctl start paperless-consumer paperless-webserver paperless-scheduler paperless-task-queue
 ```
 
 Enable Websockets Support in NPM  
