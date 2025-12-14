@@ -1,4 +1,4 @@
-# howto_proxmox
+# Proxmox LXC gotchas
 
 Gotchas around Proxmox and installed LXCs
 
